@@ -16,5 +16,6 @@ public interface TimesheetEntryRepository extends JpaRepository<TimesheetEntry, 
     @Query("SELECT te FROM TimesheetEntry te WHERE te.id.logDate = :logDate")
     List<TimesheetEntry> findByLogDate(@Param("logDate") LocalDate logDate);
 
+    List<TimesheetEntry> findByEmployeeEmployeeNameAndIdLogDate(String employeeName, LocalDate logDate);
     // You can add custom query methods here if needed
 }

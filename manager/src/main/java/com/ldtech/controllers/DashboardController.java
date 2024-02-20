@@ -17,7 +17,8 @@ public class DashboardController {
     @Autowired
     private DashboardService dashboardService;
 
-    // manager dashboard
+    // manager dashboard (by default for current week )
+    // http://localhost:8080/api/dashboard
     @GetMapping
     public ResponseEntity<List<EmployeeDashboardResponse>> getManagerDashboard(){
         List<EmployeeDashboardResponse> responses = dashboardService.getDashboard();
@@ -25,9 +26,19 @@ public class DashboardController {
     }
 
 
+    // search by employeeId
+    // http://localhost:8080/api/dashboard/id/L000150
     @GetMapping("/id/{employeeId}")
     public ResponseEntity<List<EmployeeDashboardResponse>> searchByEmployeeId(@PathVariable String employeeId, @RequestBody DateRangeDTO dateRangeDTO){
         List<EmployeeDashboardResponse> responses = dashboardService.searchByEmployeeId(employeeId, dateRangeDTO);
+        return ResponseEntity.ok(responses);
+    }
+
+    // search by employeeName
+    // http://localhost:8080/api/dashboard/name/L000150
+    @GetMapping("/name/{employeeName}")
+    public ResponseEntity<List<EmployeeDashboardResponse>> searchByEmployeeName(@PathVariable String employeeName, @RequestBody DateRangeDTO dateRangeDTO){
+        List<EmployeeDashboardResponse> responses = dashboardService.searchByEmployeeName(employeeName, dateRangeDTO);
         return ResponseEntity.ok(responses);
     }
 }

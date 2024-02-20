@@ -62,6 +62,24 @@ public class DashboardServiceImpl implements DashboardService {
         return responses;
     }
 
+    @Override
+    public List<EmployeeDashboardResponse> searchByEmployeeName(String employeeName, DateRangeDTO dateRangeDTO) {
+        LocalDate startDate = dateRangeDTO.getStartDate();
+        LocalDate endDate = dateRangeDTO.getEndDate();
+
+        List<TimesheetEntry> employeeList = new ArrayList<>();
+        for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+            List<TimesheetEntry> entryList = timesheetEntryRepository.findByEmployeeEmployeeNameAndIdLogDate(employeeName, date);
+            employeeList.addAll(entryList);
+
+        }
+        List<EmployeeDashboardResponse> responses = employeeList.stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+
+        return responses;
+    }
+
     private EmployeeDashboardResponse mapToDTO(TimesheetEntry entry){
         EmployeeDashboardResponse response =  new EmployeeDashboardResponse();
         response.setLogDate(entry.getId().getLogDate());

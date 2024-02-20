@@ -10,4 +10,6 @@ public interface DashboardService {
     List<EmployeeDashboardResponse> getDashboard();
 
     List<EmployeeDashboardResponse> searchByEmployeeId(String employeeId, DateRangeDTO dateRangeDTO);
+
+    List<EmployeeDashboardResponse> searchByEmployeeName(String employeeName, DateRangeDTO dateRangeDTO);
 }
