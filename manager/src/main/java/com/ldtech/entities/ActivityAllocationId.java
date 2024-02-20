@@ -25,6 +25,10 @@ public class ActivityAllocationId implements Serializable {
     @NotNull
     private String projectId;
 
+    @Column(name = "project_type")
+    @Size(max = 20)
+    private String projectType;
+
     @Column(name = "activity_type")
     @Size(max = 20)
     private String activityType;

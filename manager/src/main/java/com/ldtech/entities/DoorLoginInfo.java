@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Door_login_info")
+@Table(name = "door_login_info")
 public class DoorLoginInfo {
 
     @EmbeddedId
