@@ -1,5 +1,6 @@
 package com.ldtech.services.impl;
 
+import com.ldtech.dtos.DateRangeDTO;
 import com.ldtech.entities.Employee;
 import com.ldtech.entities.TimesheetEntry;
 import com.ldtech.payloads.EmployeeDashboardResponse;
@@ -35,6 +36,25 @@ public class DashboardServiceImpl implements DashboardService {
 
         }
 
+        List<EmployeeDashboardResponse> responses = employeeList.stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+
+        return responses;
+    }
+
+    @Override
+    public List<EmployeeDashboardResponse> searchByEmployeeId(String employeeId, DateRangeDTO dateRangeDTO) {
+        LocalDate startDate = dateRangeDTO.getStartDate();
+        LocalDate endDate = dateRangeDTO.getEndDate();
+
+        List<TimesheetEntry> employeeList = new ArrayList<>();
+        for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+            List<TimesheetEntry> timesheetEntries = timesheetEntryRepository.findByLogDate(date);
+            List<TimesheetEntry> entryList = timesheetEntries.stream().filter(timesheetEntry -> timesheetEntry.getId().getEmployeeId().equals(employeeId)).collect(Collectors.toList());
+            employeeList.addAll(entryList);
+
+        }
         List<EmployeeDashboardResponse> responses = employeeList.stream()
                 .map(this::mapToDTO)
                 .collect(Collectors.toList());
