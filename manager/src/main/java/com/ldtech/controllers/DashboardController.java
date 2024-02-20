@@ -49,4 +49,14 @@ public class DashboardController {
         List<EmployeeDashboardResponse> responses = dashboardService.searchByStatus(approvalStatus, dateRangeDTO);
         return ResponseEntity.ok(responses);
     }
+
+    // search by client with specific week
+    // http://localhost:8080/api/dashboard/client/Internal
+    @GetMapping("/client/{client}")
+    public ResponseEntity<List<EmployeeDashboardResponse>> searchByClient(@PathVariable("client") String client, @RequestBody DateRangeDTO dateRangeDTO){
+        List<EmployeeDashboardResponse> responses = dashboardService.searchByClient(client, dateRangeDTO);
+        return ResponseEntity.ok(responses);
+    }
+
+
 }
