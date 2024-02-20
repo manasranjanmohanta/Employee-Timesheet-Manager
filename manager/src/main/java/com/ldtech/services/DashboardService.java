@@ -12,4 +12,6 @@ public interface DashboardService {
     List<EmployeeDashboardResponse> searchByEmployeeId(String employeeId, DateRangeDTO dateRangeDTO);
 
     List<EmployeeDashboardResponse> searchByEmployeeName(String employeeName, DateRangeDTO dateRangeDTO);
+
+    List<EmployeeDashboardResponse> searchByStatus(String approvalStatus, DateRangeDTO dateRangeDTO);
 }

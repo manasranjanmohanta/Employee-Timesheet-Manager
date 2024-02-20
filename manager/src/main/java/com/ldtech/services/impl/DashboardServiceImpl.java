@@ -80,6 +80,25 @@ public class DashboardServiceImpl implements DashboardService {
         return responses;
     }
 
+    @Override
+    public List<EmployeeDashboardResponse> searchByStatus(String approvalStatus, DateRangeDTO dateRangeDTO) {
+        LocalDate startDate = dateRangeDTO.getStartDate();
+        LocalDate endDate = dateRangeDTO.getEndDate();
+
+        List<TimesheetEntry> employeeList = new ArrayList<>();
+        for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+            List<TimesheetEntry> timesheetEntries = timesheetEntryRepository.findByLogDate(date);
+            List<TimesheetEntry> entryList = timesheetEntries.stream().filter(timesheetEntry -> timesheetEntry.getApprovalStatus().equals(approvalStatus)).collect(Collectors.toList());
+            employeeList.addAll(entryList);
+
+        }
+        List<EmployeeDashboardResponse> responses = employeeList.stream()
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+
+        return responses;
+    }
+
     private EmployeeDashboardResponse mapToDTO(TimesheetEntry entry){
         EmployeeDashboardResponse response =  new EmployeeDashboardResponse();
         response.setLogDate(entry.getId().getLogDate());
