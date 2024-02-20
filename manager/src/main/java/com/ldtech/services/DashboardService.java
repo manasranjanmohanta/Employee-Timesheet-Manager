@@ -16,4 +16,6 @@ public interface DashboardService {
     List<EmployeeDashboardResponse> searchByStatus(String approvalStatus, DateRangeDTO dateRangeDTO);
 
     List<EmployeeDashboardResponse> searchByClient(String client, DateRangeDTO dateRangeDTO);
+
+    List<EmployeeDashboardResponse> searchByDepartment(String department, DateRangeDTO dateRangeDTO);
 }

@@ -19,5 +19,7 @@ public interface TimesheetEntryRepository extends JpaRepository<TimesheetEntry, 
     List<TimesheetEntry> findByEmployeeEmployeeNameAndIdLogDate(String employeeName, LocalDate logDate);
 
     List<TimesheetEntry> findByProjectClientAndIdLogDate(String client, LocalDate date);
+
+    List<TimesheetEntry> findByEmployeeDepartmentAndIdLogDate(String department, LocalDate date);
     // You can add custom query methods here if needed
 }

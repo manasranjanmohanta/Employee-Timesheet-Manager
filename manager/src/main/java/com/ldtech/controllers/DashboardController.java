@@ -58,5 +58,13 @@ public class DashboardController {
         return ResponseEntity.ok(responses);
     }
 
+    // search by department with specific week
+    // http://localhost:8080/api/dashboard/department/IT
+    @GetMapping("/department/{department}")
+    public ResponseEntity<List<EmployeeDashboardResponse>> searchByDepartment(@PathVariable("department") String department, @RequestBody DateRangeDTO dateRangeDTO){
+        List<EmployeeDashboardResponse> responses = dashboardService.searchByDepartment(department, dateRangeDTO);
+        return ResponseEntity.ok(responses);
+    }
+
 
 }
