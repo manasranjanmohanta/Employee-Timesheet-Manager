@@ -25,12 +25,12 @@ public class ActivityAllocationId implements Serializable {
     @NotNull
     private String projectId;
 
-    @Column(name = "project_type")
-    @Size(max = 20)
+    @Column(name = "project_type", length = 100)
+    @Size(max = 15)
     private String projectType;
 
-    @Column(name = "activity_type")
-    @Size(max = 20)
+    @Column(name = "activity_type", length = 100)
+    @Size(max = 15)
     private String activityType;
 
     @Column(name = "activity_start_time")

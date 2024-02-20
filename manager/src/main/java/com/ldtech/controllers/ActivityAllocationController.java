@@ -1,6 +1,7 @@
 package com.ldtech.controllers;
 
 import com.ldtech.entities.ActivityAllocation;
+import com.ldtech.payloads.EmployeeData;
 import com.ldtech.services.ActivityAllocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,10 +39,17 @@ public class ActivityAllocationController {
         return new ResponseEntity<>(allocations, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{projectId}/{employeeId}")
-    public ResponseEntity<Void> deleteActivityAllocation(@PathVariable String projectId, @PathVariable String employeeId) {
-        activityAllocationService.deleteActivityAllocation(projectId, employeeId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @GetMapping("/id/{employeeId}")
+    public ResponseEntity<EmployeeData> searchEmployeeByEmployeeId(@PathVariable(value = "employeeId") String employeeId) {
+        EmployeeData employeeData = activityAllocationService.searchEmployeeByEmployeeId(employeeId);
+        return ResponseEntity.ok(employeeData);
+    }
+
+    @GetMapping("/name/{employeeName}")
+    public ResponseEntity<EmployeeData> searchEmployeeByEmployeeName(@PathVariable(value = "employeeName") String employeeName) {
+        EmployeeData employeeData = activityAllocationService.searchEmployeeByEmployeeName(employeeName);
+        return ResponseEntity.ok(employeeData);
+
     }
 }
 

@@ -22,7 +22,7 @@ public class Employee {
 
     @Id
     @Column(name = "employee_id")
-    @Size(max = 20)
+    @Size(max = 15)
     private String employeeId;
 
     @Column(name = "employee_name")
