@@ -1,7 +1,7 @@
 package com.ldtech.services.impl;
 
+import com.ldtech.dtos.DateRangeDTO;
 import com.ldtech.entities.History;
-import com.ldtech.entities.TimesheetEntry;
 import com.ldtech.payloads.HistoryResponse;
 import com.ldtech.repositories.HistoryRepository;
 import com.ldtech.services.HistoryService;
@@ -27,6 +27,22 @@ public class HistoryServiceImpl implements HistoryService {
         // Find the start and end dates of the current week
         LocalDate startDate = currentDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         LocalDate endDate = startDate.plusDays(4);
+
+        List<History> histories = new ArrayList<>();
+        for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+            List<History> historyList = historyRepository.findByLogDate(date);
+            histories.addAll(historyList);
+
+        }
+        List<HistoryResponse> historyResponses = histories.stream().map(this::mapToHistoryResponse).collect(Collectors.toList());
+
+        return historyResponses;
+    }
+
+    @Override
+    public List<HistoryResponse> getAllHistoryWithRangedDate(DateRangeDTO dateRangeDTO) {
+        LocalDate startDate = dateRangeDTO.getStartDate();
+        LocalDate endDate = dateRangeDTO.getEndDate();
 
         List<History> histories = new ArrayList<>();
         for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
