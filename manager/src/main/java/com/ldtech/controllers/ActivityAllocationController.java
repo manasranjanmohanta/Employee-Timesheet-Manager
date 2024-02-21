@@ -1,6 +1,8 @@
 package com.ldtech.controllers;
 
 import com.ldtech.entities.ActivityAllocation;
+import com.ldtech.payloads.ActivityRequest;
+import com.ldtech.payloads.AllocateData;
 import com.ldtech.payloads.EmployeeData;
 import com.ldtech.services.ActivityAllocationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -58,6 +61,18 @@ public class ActivityAllocationController {
     public ResponseEntity<List<String>> getProjectData(@PathVariable String projectManager){
         List<String> projectNameList = activityAllocationService.getAllProjectNames(projectManager);
         return ResponseEntity.ok(projectNameList);
+   }
+
+   @PostMapping("/allocate")
+    public ResponseEntity<String> allocateActivity(@RequestBody ActivityRequest activityRequest){
+       System.out.println(activityRequest);
+        boolean isAllocated = activityAllocationService.allocateActivity(activityRequest);
+        if(isAllocated){
+            return new ResponseEntity<>("Activity allocated to employee successfully!!", HttpStatus.OK);
+        }
+        else {
+            return new ResponseEntity<>("Activity allocated to employee unsuccessfull!!", HttpStatus.OK);
+        }
    }
 }
 
