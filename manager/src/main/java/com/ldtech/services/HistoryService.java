@@ -13,4 +13,6 @@ public interface HistoryService {
     List<HistoryResponse> getAllHistoryByEmployeeId(String employeeId, DateRangeDTO dateRangeDTO);
 
     List<HistoryResponse> getAllHistoryByEmployeeName(String employeeName, DateRangeDTO dateRangeDTO);
+
+    List<HistoryResponse> getAllHistoryByApprovalStatus(String approvalStatus, DateRangeDTO dateRangeDTO);
 }

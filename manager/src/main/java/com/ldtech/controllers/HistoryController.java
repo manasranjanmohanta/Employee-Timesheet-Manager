@@ -41,6 +41,12 @@ public class HistoryController {
         return ResponseEntity.ok(responses);
     }
 
+    @GetMapping("/status/{approvalStatus}")
+    public ResponseEntity<List<HistoryResponse>> getAllHistoryInfosByApprovalStatus(@PathVariable String approvalStatus, @RequestBody DateRangeDTO dateRangeDTO){
+        List<HistoryResponse> responses = historyService.getAllHistoryByApprovalStatus(approvalStatus, dateRangeDTO);
+        return ResponseEntity.ok(responses);
+    }
+
 
 
 }

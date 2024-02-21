@@ -16,4 +16,6 @@ public interface HistoryRepository extends JpaRepository<History, String> {
     List<History> findByEmployeeIdAndLogDate(String employeeId, LocalDate date);
 
     List<History> findByEmployeeNameAndLogDate(String employeeName, LocalDate date);
+
+    List<History> findByApprovalStatusAndLogDate(String approvalStatus, LocalDate date);
 }
