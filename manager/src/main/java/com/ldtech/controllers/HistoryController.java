@@ -35,5 +35,12 @@ public class HistoryController {
         return ResponseEntity.ok(responses);
     }
 
+    @GetMapping("/name/{employeeName}")
+    public ResponseEntity<List<HistoryResponse>> getAllHistoryInfosByEmployeeName(@PathVariable String employeeName, @RequestBody DateRangeDTO dateRangeDTO){
+        List<HistoryResponse> responses = historyService.getAllHistoryByEmployeeName(employeeName, dateRangeDTO);
+        return ResponseEntity.ok(responses);
+    }
+
+
 
 }
