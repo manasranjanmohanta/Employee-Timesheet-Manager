@@ -13,5 +13,7 @@ public interface ActivityAllocationService {
     EmployeeData searchEmployeeByEmployeeId(String employeeId);
 
     EmployeeData searchEmployeeByEmployeeName(String employeeName);
+
+    List<String> getAllProjectNames(String projectManager);
 }
 

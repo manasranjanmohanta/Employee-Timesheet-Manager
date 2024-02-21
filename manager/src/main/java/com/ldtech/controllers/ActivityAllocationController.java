@@ -45,11 +45,19 @@ public class ActivityAllocationController {
         return ResponseEntity.ok(employeeData);
     }
 
+
+    // TO GET THE EMPLOYEE DATA
     @GetMapping("/name/{employeeName}")
     public ResponseEntity<EmployeeData> searchEmployeeByEmployeeName(@PathVariable(value = "employeeName") String employeeName) {
         EmployeeData employeeData = activityAllocationService.searchEmployeeByEmployeeName(employeeName);
         return ResponseEntity.ok(employeeData);
+   }
 
-    }
+   // TO GET THE PROJECT'S NAME CORRESSPONDING TO REPORTING MANAGER
+    @GetMapping("/projects/{projectManager}")
+    public ResponseEntity<List<String>> getProjectData(@PathVariable String projectManager){
+        List<String> projectNameList = activityAllocationService.getAllProjectNames(projectManager);
+        return ResponseEntity.ok(projectNameList);
+   }
 }
 

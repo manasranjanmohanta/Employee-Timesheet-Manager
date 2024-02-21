@@ -3,14 +3,17 @@ package com.ldtech.services.impl;
 import com.ldtech.entities.ActivityAllocation;
 import com.ldtech.entities.ActivityAllocationId;
 import com.ldtech.entities.Employee;
+import com.ldtech.entities.Project;
 import com.ldtech.payloads.EmployeeData;
 import com.ldtech.repositories.ActivityAllocationRepository;
 import com.ldtech.repositories.EmployeeRepository;
+import com.ldtech.repositories.ProjectRepository;
 import com.ldtech.services.ActivityAllocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -21,6 +24,9 @@ public class ActivityAllocationServiceImpl implements ActivityAllocationService 
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private ProjectRepository projectRepository;
 
     @Override
     public ActivityAllocation saveActivityAllocation(ActivityAllocation activityAllocation) {
@@ -60,6 +66,17 @@ public class ActivityAllocationServiceImpl implements ActivityAllocationService 
         employeeData.setEmployeeName(employee.getEmployeeName());
 
         return employeeData;
+    }
+
+    @Override
+    public List<String> getAllProjectNames(String projectManager) {
+//        List<Project> projects = projectRepository.findAll();
+////        return projects.stream()
+////                .map(project -> project.getProjectName()).collect(Collectors.toList());
+        List<Project> projects = projectRepository.findProjectsByProjectManager(projectManager);
+        return projects.stream()
+                .map(Project::getProjectName)
+                .collect(Collectors.toList());
     }
 
 }
