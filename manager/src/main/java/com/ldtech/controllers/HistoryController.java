@@ -6,10 +6,7 @@ import com.ldtech.payloads.HistoryResponse;
 import com.ldtech.services.HistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -29,6 +26,12 @@ public class HistoryController {
     @GetMapping("/rangedDate")
     public ResponseEntity<List<HistoryResponse>> getAllHistoryInfosWithRangedDate(@RequestBody DateRangeDTO dateRangeDTO){
         List<HistoryResponse> responses = historyService.getAllHistoryWithRangedDate(dateRangeDTO);
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/id/{employeeId}")
+    public ResponseEntity<List<HistoryResponse>> getAllHistoryInfosByEmployeeId(@PathVariable String employeeId, @RequestBody DateRangeDTO dateRangeDTO){
+        List<HistoryResponse> responses = historyService.getAllHistoryByEmployeeId(employeeId, dateRangeDTO);
         return ResponseEntity.ok(responses);
     }
 

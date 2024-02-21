@@ -55,6 +55,23 @@ public class HistoryServiceImpl implements HistoryService {
         return historyResponses;
     }
 
+    @Override
+    public List<HistoryResponse> getAllHistoryByEmployeeId(String employeeId, DateRangeDTO dateRangeDTO) {
+        LocalDate startDate = dateRangeDTO.getStartDate();
+        LocalDate endDate = dateRangeDTO.getEndDate();
+
+        List<History> histories = new ArrayList<>();
+        for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+            List<History> historyList = historyRepository.findByEmployeeIdAndLogDate(employeeId, date);
+
+            histories.addAll(historyList);
+
+        }
+        List<HistoryResponse> historyResponses = histories.stream().map(this::mapToHistoryResponse).collect(Collectors.toList());
+
+        return historyResponses;
+    }
+
     private HistoryResponse mapToHistoryResponse(History history) {
         HistoryResponse response = new HistoryResponse();
         response.setEmployeeId(history.getEmployeeId());

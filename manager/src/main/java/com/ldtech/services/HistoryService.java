@@ -9,4 +9,6 @@ public interface HistoryService {
     List<HistoryResponse> getAllHistory();
 
     List<HistoryResponse> getAllHistoryWithRangedDate(DateRangeDTO dateRangeDTO);
+
+    List<HistoryResponse> getAllHistoryByEmployeeId(String employeeId, DateRangeDTO dateRangeDTO);
 }

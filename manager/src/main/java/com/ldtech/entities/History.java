@@ -15,6 +15,9 @@ import java.time.LocalDate;
 @Table(name = "history_info")
 public class History {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
     @Column(name = "employee_id")
     @Size(max = 15)
     private String employeeId;

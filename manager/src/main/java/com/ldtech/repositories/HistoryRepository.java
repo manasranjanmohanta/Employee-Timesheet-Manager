@@ -12,4 +12,6 @@ import java.util.List;
 public interface HistoryRepository extends JpaRepository<History, String> {
     @Query("SELECT h FROM History h WHERE h.logDate = :logDate")
     List<History> findByLogDate(@Param("logDate") LocalDate logDate);
+
+    List<History> findByEmployeeIdAndLogDate(String employeeId, LocalDate date);
 }
