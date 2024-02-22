@@ -28,7 +28,6 @@ public class ReportServiceImpl implements ReportService {
         LocalDate startDate = dateRangeDTO.getStartDate();
         LocalDate endDate = dateRangeDTO.getEndDate();
 
-        System.out.println(startDate + " " + endDate);
 
         List<TimesheetEntry> timesheetEntries = new ArrayList<>();
         for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
@@ -89,5 +88,35 @@ public class ReportServiceImpl implements ReportService {
             // Handle exception
             return new byte[0];
         }
+    }
+
+    @Override
+    public List<TimesheetEntry> getEmployeeDataByEmployeeId(String employeeId, DateRangeDTO dateRangeDTO) {
+        LocalDate startDate = dateRangeDTO.getStartDate();
+        LocalDate endDate = dateRangeDTO.getEndDate();
+
+        List<TimesheetEntry> timesheetEntries = new ArrayList<>();
+        for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+            List<TimesheetEntry> entryList = timesheetEntryRepository.findByEmployeeEmployeeIdAndIdLogDate(employeeId, date);
+
+            timesheetEntries.addAll(entryList);
+
+        }
+        return timesheetEntries;
+    }
+
+    @Override
+    public List<TimesheetEntry> getEmployeeDataByEmployeeName(String employeeName, DateRangeDTO dateRangeDTO) {
+        LocalDate startDate = dateRangeDTO.getStartDate();
+        LocalDate endDate = dateRangeDTO.getEndDate();
+
+        List<TimesheetEntry> timesheetEntries = new ArrayList<>();
+        for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
+            List<TimesheetEntry> entryList = timesheetEntryRepository.findByEmployeeEmployeeNameAndIdLogDate(employeeName, date);
+
+            timesheetEntries.addAll(entryList);
+
+        }
+        return timesheetEntries;
     }
 }
