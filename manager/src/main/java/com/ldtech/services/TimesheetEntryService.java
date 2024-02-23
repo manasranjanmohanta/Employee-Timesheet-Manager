@@ -8,7 +8,9 @@ import java.util.List;
 
 public interface TimesheetEntryService {
     TimesheetEntry saveTimesheetEntry(TimesheetEntry timesheetEntry);
-    TimesheetEntry getTimesheetEntryById(String employeeId, LocalDate logDate);
+    TimesheetEntry getTimesheetEntryByEmployeeIdAndLogDate(String employeeId, LocalDate logDate);
     List<TimesheetEntry> getAllTimesheetEntries();
     void deleteTimesheetEntry(String employeeId, LocalDate logDate);
+
+    List<TimesheetEntry> getTimesheetEntryByEmployeeId(String employeeId);
 }

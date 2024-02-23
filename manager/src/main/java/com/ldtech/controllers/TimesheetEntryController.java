@@ -26,9 +26,19 @@ public class TimesheetEntryController {
 
     @GetMapping("/{employeeId}/{logDate}")
     public ResponseEntity<TimesheetEntry> getTimesheetEntryById(@PathVariable String employeeId, @PathVariable LocalDate logDate) {
-        TimesheetEntry entry = timesheetEntryService.getTimesheetEntryById(employeeId, logDate);
+        TimesheetEntry entry = timesheetEntryService.getTimesheetEntryByEmployeeIdAndLogDate(employeeId, logDate);
         if (entry != null) {
             return new ResponseEntity<>(entry, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/{employeeId}")
+    public ResponseEntity<List<TimesheetEntry>> getTimesheetEntryById(@PathVariable String employeeId) {
+        List<TimesheetEntry> entryList = timesheetEntryService.getTimesheetEntryByEmployeeId(employeeId);
+        if (entryList != null) {
+            return new ResponseEntity<>(entryList, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

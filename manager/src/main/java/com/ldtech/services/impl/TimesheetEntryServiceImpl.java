@@ -7,6 +7,7 @@ import com.ldtech.services.TimesheetEntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Time;
 import java.time.LocalDate;
 
 import java.util.List;
@@ -23,11 +24,10 @@ public class TimesheetEntryServiceImpl implements TimesheetEntryService {
     }
 
     @Override
-    public TimesheetEntry getTimesheetEntryById(String employeeId, LocalDate logDate) {
-        TimesheetEntryId id = new TimesheetEntryId();
-        id.setEmployeeId(employeeId);
-        id.setLogDate(logDate);
-        return timesheetEntryRepository.findById(id).orElse(null);
+    public TimesheetEntry getTimesheetEntryByEmployeeIdAndLogDate(String employeeId, LocalDate logDate) {
+        List<TimesheetEntry> timesheetEntry = timesheetEntryRepository.findByIdEmployeeIdAndIdLogDate(employeeId, logDate);
+        System.out.println(timesheetEntry.toString());
+        return null;
     }
 
     @Override
@@ -41,5 +41,11 @@ public class TimesheetEntryServiceImpl implements TimesheetEntryService {
         id.setEmployeeId(employeeId);
         id.setLogDate(logDate);
         timesheetEntryRepository.deleteById(id);
+    }
+
+    @Override
+    public List<TimesheetEntry> getTimesheetEntryByEmployeeId(String employeeId) {
+        List<TimesheetEntry> entries = timesheetEntryRepository.findByIdEmployeeId(employeeId);
+        return entries;
     }
 }
