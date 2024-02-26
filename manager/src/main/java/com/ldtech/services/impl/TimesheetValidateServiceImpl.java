@@ -5,6 +5,8 @@ import com.ldtech.entities.DoorLoginInfo;
 import com.ldtech.entities.DoorLoginInfoId;
 import com.ldtech.entities.TimesheetEntry;
 import com.ldtech.payloads.ProjectInfos;
+import com.ldtech.payloads.TimesheetInfo;
+import com.ldtech.payloads.TimesheetRequest;
 import com.ldtech.payloads.TimesheetResponse;
 import com.ldtech.repositories.ActivityAllocationRepository;
 import com.ldtech.repositories.DoorLoginInfoRepository;
@@ -74,4 +76,23 @@ public class TimesheetValidateServiceImpl implements TimesheetValidateService {
 
         return timesheetResponse;
     }
+
+    @Override
+    public void validateTimesheet(TimesheetRequest timesheetRequest) {
+        List<TimesheetEntry> timesheetEntryList = timesheetEntryRepository.findByIdEmployeeIdAndIdLogDate(timesheetRequest.getEmployeeId(), timesheetRequest.getLogDate());
+
+        for (TimesheetEntry timesheetEntry : timesheetEntryList) {
+            for (TimesheetInfo info : timesheetRequest.getTimesheetInfoList()) {
+                if (timesheetEntry.getId().getLogDate().equals(timesheetRequest.getLogDate()) &&
+                        timesheetEntry.getId().getStartTime().equals(info.getStartTime())) {
+
+                    timesheetEntry.setRemark(info.getRemark());
+                    timesheetEntry.setApprovalStatus(timesheetRequest.getApprovalStatus());
+                }
+            }
+            // Save the timesheetEntry after all updates are done
+            timesheetEntryRepository.save(timesheetEntry);
+        }
+    }
+
 }
