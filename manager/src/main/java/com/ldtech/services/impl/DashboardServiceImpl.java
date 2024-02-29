@@ -31,8 +31,9 @@ public class DashboardServiceImpl implements DashboardService {
         List<TimesheetEntry> employeeList = new ArrayList<>();
         for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
             List<TimesheetEntry> timesheetEntries = timesheetEntryRepository.findByLogDate(date);
-            List<TimesheetEntry> pending = timesheetEntries.stream().filter(timesheetEntry -> timesheetEntry.getApprovalStatus().equals("Pending")).collect(Collectors.toList());
-            employeeList.addAll(pending);
+//            List<TimesheetEntry> pending = timesheetEntries.stream().filter(timesheetEntry -> timesheetEntry.getApprovalStatus().equals("Pending")).collect(Collectors.toList());
+//            employeeList.addAll(pending);
+            employeeList.addAll(timesheetEntries);
 
         }
 
