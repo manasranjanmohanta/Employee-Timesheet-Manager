@@ -15,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/activityAllocations")
-@CrossOrigin("*")
 public class ActivityAllocationController {
 
     @Autowired

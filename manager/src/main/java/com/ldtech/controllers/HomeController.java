@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/home")
-@CrossOrigin("*")
 public class HomeController {
     @Autowired
     private HomeService homeService;
