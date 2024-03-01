@@ -23,7 +23,7 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
-    @GetMapping("/download")
+    @PostMapping("/download")
     public ResponseEntity<Resource> downloadEmployeesXLS(@RequestBody DateRangeDTO dateRangeDTO) {
 
         List<TimesheetEntry> timesheetList = reportService.getEmployeeData(dateRangeDTO);
@@ -40,7 +40,7 @@ public class ReportController {
                 .body(resource);
     }
 
-    @GetMapping("/download/id/{employeeId}")
+    @PostMapping("/download/id/{employeeId}")
     public ResponseEntity<Resource> downloadEmployeesXLSByEmployeeId(@PathVariable String employeeId, @RequestBody DateRangeDTO dateRangeDTO) {
 
         List<TimesheetEntry> timesheetList = reportService.getEmployeeDataByEmployeeId(employeeId, dateRangeDTO);
@@ -49,14 +49,14 @@ public class ReportController {
         byte[] xlsData = reportService.generateXLS(timesheetList);
 
         ByteArrayResource resource = new ByteArrayResource(xlsData);
-
-        String fileName = timesheetEntry.getEmployee().getEmployeeName().toString() + ".xls";
-// Encode the filename using UTF-8
-        String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8)
-                .replaceAll("\\+", "_"); // Replace '+' with '%20' to properly encode spaces
+//
+//        String fileName = timesheetEntry.getEmployee().getEmployeeName().toString() + ".xls";
+//// Encode the filename using UTF-8
+//        String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8)
+//                .replaceAll("\\+", "_"); // Replace '+' with '%20' to properly encode spaces
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + encodedFileName)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=employee.xls")
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .contentLength(xlsData.length)
                 .body(resource);
@@ -71,14 +71,14 @@ public class ReportController {
         byte[] xlsData = reportService.generateXLS(timesheetList);
 
         ByteArrayResource resource = new ByteArrayResource(xlsData);
-
-        String fileName = timesheetEntry.getEmployee().getEmployeeName().toString() + ".xls";
-// Encode the filename using UTF-8
-        String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8)
-                .replaceAll("\\+", "_"); // Replace '+' with '%20' to properly encode spaces
+//
+//        String fileName = timesheetEntry.getEmployee().getEmployeeName().toString() + ".xls";
+//// Encode the filename using UTF-8
+//        String encodedFileName = URLEncoder.encode(fileName, StandardCharsets.UTF_8)
+//                .replaceAll("\\+", "_"); // Replace '+' with '%20' to properly encode spaces
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + encodedFileName)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=employee.xls")
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
                 .contentLength(xlsData.length)
                 .body(resource);
