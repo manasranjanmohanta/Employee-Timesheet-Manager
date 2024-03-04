@@ -2,6 +2,7 @@ package com.ldtech.services.impl;
 
 import com.ldtech.entities.Employee;
 import com.ldtech.entities.Role;
+import com.ldtech.exceptions.ResourceCreationException;
 import com.ldtech.exceptions.ResourceNotFoundException;
 import com.ldtech.exceptions.ResourceRetrivalException;
 import com.ldtech.repositories.EmployeeRepository;
@@ -19,12 +20,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee saveEmployee(Employee employee) {
-        return employeeRepository.save(employee);
+        try {
+            return employeeRepository.save(employee);
+        } catch (Exception e) {
+            throw new ResourceCreationException("Failed to save employee", e);
+        }
     }
 
     @Override
     public Employee getEmployeeById(String employeeId) {
-        return employeeRepository.findById(employeeId).orElseThrow(() -> new ResourceNotFoundException("Employee", "employeeId", employeeId));
+        return employeeRepository.findById(employeeId).orElseThrow(() -> new ResourceNotFoundException("Employee", "ID", employeeId));
     }
 
     @Override
