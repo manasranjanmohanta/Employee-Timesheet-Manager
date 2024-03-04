@@ -4,6 +4,9 @@ import com.ldtech.entities.ActivityAllocation;
 import com.ldtech.entities.ActivityAllocationId;
 import com.ldtech.entities.Employee;
 import com.ldtech.entities.Project;
+import com.ldtech.exceptions.ResourceCreationException;
+import com.ldtech.exceptions.ResourceNotFoundException;
+import com.ldtech.exceptions.ResourceRetrivalException;
 import com.ldtech.payloads.ActivityRequest;
 import com.ldtech.payloads.AllocateData;
 import com.ldtech.payloads.EmployeeData;
@@ -34,7 +37,11 @@ public class    ActivityAllocationServiceImpl implements ActivityAllocationServi
 
     @Override
     public ActivityAllocation saveActivityAllocation(ActivityAllocation activityAllocation) {
-        return activityAllocationRepository.save(activityAllocation);
+        try {
+            return activityAllocationRepository.save(activityAllocation);
+        } catch (Exception e) {
+            throw new ResourceCreationException("Failed to allocate activity to employee!", e);
+        }
     }
 
     @Override
@@ -42,17 +49,22 @@ public class    ActivityAllocationServiceImpl implements ActivityAllocationServi
         ActivityAllocationId id = new ActivityAllocationId();
         id.setProjectId(projectId);
         id.setEmployeeId(employeeId);
-        return activityAllocationRepository.findById(id).orElse(null);
+        return activityAllocationRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Failed to find allocate activity for the employeeId" + employeeId));
     }
     @Override
     public List<ActivityAllocation> getAllActivityAllocations() {
-        return activityAllocationRepository.findAll();
+        try {
+            return activityAllocationRepository.findAll();
+        } catch (Exception e) {
+            throw new ResourceRetrivalException("Failed to retrieve allocated activities for the employees!!", e);
+        }
     }
 
 
     @Override
     public EmployeeData searchEmployeeByEmployeeId(String employeeId) {
-        Employee employee = employeeRepository.findById(employeeId).orElse(null);
+        // Check employee exist by employeeId or not
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow(() -> new ResourceNotFoundException("Employee", "ID", employeeId));
 
         EmployeeData employeeData = new EmployeeData();
         employeeData.setEmployeeId(employee.getEmployeeId());
@@ -63,7 +75,12 @@ public class    ActivityAllocationServiceImpl implements ActivityAllocationServi
 
     @Override
     public EmployeeData searchEmployeeByEmployeeName(String employeeName) {
-        Employee employee = employeeRepository.findByEmployeeName(employeeName);
+        Employee employee = null;
+        try {
+            employee = employeeRepository.findByEmployeeName(employeeName);
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("Failed to find employee with employee name" + employeeName);
+        }
 
         EmployeeData employeeData = new EmployeeData();
         employeeData.setEmployeeId(employee.getEmployeeId());
@@ -74,7 +91,12 @@ public class    ActivityAllocationServiceImpl implements ActivityAllocationServi
 
     @Override
     public List<String> getAllProjectNames(String projectManager) {
-        List<Project> projects = projectRepository.findProjectsByProjectManager(projectManager);
+        List<Project> projects = null;
+        try {
+            projects = projectRepository.findProjectsByProjectManager(projectManager);
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("Failed to find projects by Project Manager!");
+        }
         return projects.stream()
                 .map(Project::getProjectName)
                 .collect(Collectors.toList());
@@ -83,7 +105,7 @@ public class    ActivityAllocationServiceImpl implements ActivityAllocationServi
     @Override
     @Transactional
     public boolean allocateActivity(ActivityRequest activityRequest) {
-        System.out.println(activityRequest.getAllocateData());
+//        System.out.println(activityRequest.getAllocateData());
         try {
             for (AllocateData allocateData : activityRequest.getAllocateData()) {
                 ActivityAllocation activityAllocation = new ActivityAllocation();
@@ -116,6 +138,7 @@ public class    ActivityAllocationServiceImpl implements ActivityAllocationServi
             return true;
         } catch (Exception e) {
             e.printStackTrace(); // Handle the exception appropriately
+
             return false;
         }
     }
