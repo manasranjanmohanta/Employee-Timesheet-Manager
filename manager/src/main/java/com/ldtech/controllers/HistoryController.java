@@ -23,25 +23,25 @@ public class HistoryController {
         return ResponseEntity.ok(responses);
     }
 
-    @GetMapping("/rangedDate")
+    @PostMapping("/rangedDate")
     public ResponseEntity<List<HistoryResponse>> getAllHistoryInfosWithRangedDate(@RequestBody DateRangeDTO dateRangeDTO){
         List<HistoryResponse> responses = historyService.getAllHistoryWithRangedDate(dateRangeDTO);
         return ResponseEntity.ok(responses);
     }
 
-    @GetMapping("/id/{employeeId}")
+    @PostMapping("/id/{employeeId}")
     public ResponseEntity<List<HistoryResponse>> getAllHistoryInfosByEmployeeId(@PathVariable String employeeId, @RequestBody DateRangeDTO dateRangeDTO){
         List<HistoryResponse> responses = historyService.getAllHistoryByEmployeeId(employeeId, dateRangeDTO);
         return ResponseEntity.ok(responses);
     }
 
-    @GetMapping("/name/{employeeName}")
+    @PostMapping("/name/{employeeName}")
     public ResponseEntity<List<HistoryResponse>> getAllHistoryInfosByEmployeeName(@PathVariable String employeeName, @RequestBody DateRangeDTO dateRangeDTO){
         List<HistoryResponse> responses = historyService.getAllHistoryByEmployeeName(employeeName, dateRangeDTO);
         return ResponseEntity.ok(responses);
     }
 
-    @GetMapping("/status/{approvalStatus}")
+    @PostMapping("/status/{approvalStatus}")
     public ResponseEntity<List<HistoryResponse>> getAllHistoryInfosByApprovalStatus(@PathVariable String approvalStatus, @RequestBody DateRangeDTO dateRangeDTO){
         List<HistoryResponse> responses = historyService.getAllHistoryByApprovalStatus(approvalStatus, dateRangeDTO);
         return ResponseEntity.ok(responses);

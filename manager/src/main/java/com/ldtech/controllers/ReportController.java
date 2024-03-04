@@ -61,7 +61,7 @@ public class ReportController {
                 .body(resource);
     }
 
-    @GetMapping("/download/name/{employeeName}")
+    @PostMapping("/download/name/{employeeName}")
     public ResponseEntity<Resource> downloadEmployeesXLSByEmployeeName(@PathVariable String employeeName, @RequestBody DateRangeDTO dateRangeDTO) {
 
         List<TimesheetEntry> timesheetList = reportService.getEmployeeDataByEmployeeName(employeeName, dateRangeDTO);

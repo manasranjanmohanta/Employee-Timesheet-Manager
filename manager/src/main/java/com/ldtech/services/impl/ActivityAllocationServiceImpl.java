@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 
 @Service
-public class ActivityAllocationServiceImpl implements ActivityAllocationService {
+public class    ActivityAllocationServiceImpl implements ActivityAllocationService {
 
     @Autowired
     private ActivityAllocationRepository activityAllocationRepository;
