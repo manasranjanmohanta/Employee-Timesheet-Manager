@@ -2,6 +2,7 @@ package com.ldtech.services.impl;
 
 import com.ldtech.entities.Employee;
 import com.ldtech.entities.Role;
+import com.ldtech.exceptions.ResourceNotFoundException;
 import com.ldtech.repositories.EmployeeRepository;
 import com.ldtech.services.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee getEmployeeById(String employeeId) {
-        return employeeRepository.findById(employeeId).orElse(null);
+        return employeeRepository.findById(employeeId).orElseThrow(() -> new ResourceNotFoundException("Employee", "employeeId", employeeId));
     }
 
     @Override
