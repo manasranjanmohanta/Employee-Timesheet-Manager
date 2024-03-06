@@ -59,8 +59,8 @@ public class TimesheetValidateServiceImpl implements TimesheetValidateService {
             LocalDate logDate1 = entry.getId().getLogDate();
             String projectId1 = entry.getProject().getProjectId();
             String activityType1 = entry.getId().getActivityType();
-            ActivityAllocation activityAllocation = activityAllocationRepository.findByIdEmployeeIdAndIdProjectIdAndIdActivityTypeAndActivityAllocationDate(employeeId, projectId1, activityType1, logDate1);
-            project.setProjectType(activityAllocation.getId().getProjectType());
+            ActivityAllocation activityAllocation = activityAllocationRepository.findByIdEmployeeIdAndIdProjectIdAndIdActivityTypeAndIdActivityStartDate(employeeId, projectId1, activityType1, logDate1);
+//            project.setProjectType(activityAllocation.getId().getProjectType());
 
             project.setActivityType(entry.getId().getActivityType());
             project.setStartTime(entry.getId().getStartTime());

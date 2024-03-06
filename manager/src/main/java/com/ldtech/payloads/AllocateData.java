@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalTime;
+import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
@@ -13,6 +13,6 @@ public class AllocateData {
     private String projectName;
     private String projectType;
     private String activityType;
-    private LocalTime activityStartTime;
-    private LocalTime activityEndTime;
+    private LocalDate activityStartDate;
+    private LocalDate activityEndDate;
 }

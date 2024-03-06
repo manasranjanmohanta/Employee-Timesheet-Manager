@@ -2,11 +2,9 @@ package com.ldtech.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Data
 @NoArgsConstructor
@@ -26,14 +24,14 @@ public class ActivityAllocation {
     @JoinColumn(name = "project_id", referencedColumnName = "project_id", insertable = false, updatable = false)
     private Project project;
 
-    @Column(name = "activity_end_time")
+    @Column(name = "activity_allocation_end_date")
     @NotNull
-    private LocalTime activityEndTime;
+    private LocalDate activityEndDate;
 
-       @Column(name = "activity_allocation_date")
-    @Temporal(TemporalType.DATE)
-    @NotNull
-    private LocalDate activityAllocationDate;
+//       @Column(name = "activity_allocation_date")
+//    @Temporal(TemporalType.DATE)
+//    @NotNull
+//    private LocalDate activityAllocationDate;
 
 }
 

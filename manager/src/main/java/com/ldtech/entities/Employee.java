@@ -39,13 +39,13 @@ public class Employee {
     @Email
     private String companyEmail;
 
-    @Column(name = "password")
-    @Size(max = 10)
-    private String password;
+//    @Column(name = "password")
+//    @Size(max = 10)
+//    private String password;
 
     @Column(name = "dob")
 //    @Temporal(TemporalType.DATE)
-    @JsonFormat(pattern = "dd-MM-yyyy")
+//    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate dob;
 
     @Column(name = "gender")
@@ -76,9 +76,9 @@ public class Employee {
     @Size(max = 10)
     private String employeeStatus;
 
-    @OneToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "role_id")
-    private Role role;
+//    @OneToOne
+//    @JoinColumn(name = "role_id", referencedColumnName = "role_id")
+//    private Role role;
 
 //    @JsonIgnore
 //    @OneToMany(mappedBy = "employee")

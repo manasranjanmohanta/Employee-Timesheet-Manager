@@ -125,13 +125,13 @@ public class    ActivityAllocationServiceImpl implements ActivityAllocationServi
                     throw new IllegalArgumentException("Project not found for projectName: " + allocateData.getProjectName());
                 }
 
-                activityAllocationId.setProjectType(allocateData.getProjectType());
+//                activityAllocationId.setProjectType(allocateData.getProjectType());
                 activityAllocationId.setActivityType(allocateData.getActivityType());
-                activityAllocationId.setActivityStartTime(allocateData.getActivityStartTime());
+                activityAllocationId.setActivityStartDate(allocateData.getActivityStartDate());
 
                 activityAllocation.setId(activityAllocationId);
-                activityAllocation.setActivityAllocationDate(activityRequest.getActivityAllocationDate());
-                activityAllocation.setActivityEndTime(allocateData.getActivityEndTime());
+//                activityAllocation.setActivityAllocationDate(activityRequest.getActivityAllocationDate());
+                activityAllocation.setActivityEndDate(allocateData.getActivityEndDate());
 
                 activityAllocationRepository.save(activityAllocation);
             }

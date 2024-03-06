@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 @Data
@@ -25,16 +26,16 @@ public class ActivityAllocationId implements Serializable {
     @NotNull
     private String projectId;
 
-    @Column(name = "project_type", length = 100)
-    @Size(max = 15)
-    private String projectType;
+//    @Column(name = "project_type", length = 100)
+//    @Size(max = 15)
+//    private String projectType;
 
     @Column(name = "activity_type", length = 100)
     @Size(max = 15)
     private String activityType;
 
-    @Column(name = "activity_start_time")
+    @Column(name = "activity_allocation_start_date")
     @NotNull
-    private LocalTime activityStartTime;
+    private LocalDate activityStartDate;
 
 }
