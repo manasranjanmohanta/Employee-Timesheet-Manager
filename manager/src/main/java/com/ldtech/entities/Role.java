@@ -24,8 +24,5 @@ public class Role {
     @Size(max = 10)
     private String roleName;
 
-//    @JsonIgnore
-//    @OneToOne(mappedBy = "role")
-//    private Employee employee;
 
 }

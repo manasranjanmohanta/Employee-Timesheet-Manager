@@ -2,7 +2,9 @@ package com.ldtech.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -20,12 +22,17 @@ public class SecurityConfig {
 //    public UserDetailsService userDetailsService(){
 //        return new CustomUserDetailsService();
 //    }
+@Bean
+public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)throws Exception{
+    return authenticationConfiguration.getAuthenticationManager();
+}
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // Configures the CSRF(Cross Site Request Forgery) to be available for Javascript to read from cookies
         http.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-                .authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/api/employees/**").authenticated())
+                .authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/api/**").authenticated() )
                 .httpBasic(Customizer.withDefaults());
         return http.build();
     }
