@@ -32,7 +32,7 @@ public AuthenticationManager authenticationManager(AuthenticationConfiguration a
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // Configures the CSRF(Cross Site Request Forgery) to be available for Javascript to read from cookies
         http.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-                .authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/api/**").authenticated() )
+                .authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/api/employees/**").authenticated() )
                 .httpBasic(Customizer.withDefaults());
         return http.build();
     }
