@@ -15,15 +15,20 @@ import java.util.Set;
 @Table(name = "user_authentication", uniqueConstraints = {@UniqueConstraint(columnNames = "companyEmail")})
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long userId;
+
     @Email
     private String companyEmail;
 
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "company_email", referencedColumnName = "companyEmail"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "roleId"))
+    @JoinTable(
+           name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "userId"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "roleId")
+    )
     private Set<Role> roles;
 
 }

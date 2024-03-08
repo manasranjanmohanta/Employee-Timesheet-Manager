@@ -7,6 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -16,7 +18,6 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id")
     @Size(max = 10)
     private long roleId;
 
@@ -24,5 +25,7 @@ public class Role {
     @Size(max = 10)
     private String roleName;
 
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users;
 
 }
