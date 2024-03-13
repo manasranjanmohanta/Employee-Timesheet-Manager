@@ -22,7 +22,7 @@ public class HistoryResponse {
 
     private String approvalStatus;
 
-    private String modifiedBy;
+    private String projectName;
 
     private LocalDate modifiedDate;
 }

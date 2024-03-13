@@ -1,9 +1,9 @@
 package com.ldtech.services.impl;
 
 import com.ldtech.dtos.DateRangeDTO;
-import com.ldtech.entities.History;
+import com.ldtech.entities.TimesheetEntry;
 import com.ldtech.payloads.HistoryResponse;
-import com.ldtech.repositories.HistoryRepository;
+import com.ldtech.repositories.TimesheetEntryRepository;
 import com.ldtech.services.HistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class HistoryServiceImpl implements HistoryService {
 
     @Autowired
-    private HistoryRepository historyRepository;
+    private TimesheetEntryRepository timesheetEntryRepository;
 
     @Override
     public List<HistoryResponse> getAllHistory() {
@@ -28,9 +28,9 @@ public class HistoryServiceImpl implements HistoryService {
         LocalDate startDate = currentDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         LocalDate endDate = startDate.plusDays(4);
 
-        List<History> histories = new ArrayList<>();
+        List<TimesheetEntry> histories = new ArrayList<>();
         for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
-            List<History> historyList = historyRepository.findByLogDate(date);
+            List<TimesheetEntry> historyList = timesheetEntryRepository.findByLogDate(date);
             histories.addAll(historyList);
 
         }
@@ -44,9 +44,9 @@ public class HistoryServiceImpl implements HistoryService {
         LocalDate startDate = dateRangeDTO.getStartDate();
         LocalDate endDate = dateRangeDTO.getEndDate();
 
-        List<History> histories = new ArrayList<>();
+        List<TimesheetEntry> histories = new ArrayList<>();
         for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
-            List<History> historyList = historyRepository.findByLogDate(date);
+            List<TimesheetEntry> historyList = timesheetEntryRepository.findByLogDate(date);
             histories.addAll(historyList);
 
         }
@@ -60,9 +60,9 @@ public class HistoryServiceImpl implements HistoryService {
         LocalDate startDate = dateRangeDTO.getStartDate();
         LocalDate endDate = dateRangeDTO.getEndDate();
 
-        List<History> histories = new ArrayList<>();
+        List<TimesheetEntry> histories = new ArrayList<>();
         for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
-            List<History> historyList = historyRepository.findByEmployeeIdAndLogDate(employeeId, date);
+            List<TimesheetEntry> historyList = timesheetEntryRepository.findByIdEmployeeIdAndIdLogDate(employeeId, date);
 
             histories.addAll(historyList);
 
@@ -77,14 +77,15 @@ public class HistoryServiceImpl implements HistoryService {
         LocalDate startDate = dateRangeDTO.getStartDate();
         LocalDate endDate = dateRangeDTO.getEndDate();
 
-        List<History> histories = new ArrayList<>();
+        List<TimesheetEntry> histories = new ArrayList<>();
         for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
-            List<History> historyList = historyRepository.findByEmployeeNameAndLogDate(employeeName, date);
+            List<TimesheetEntry> historyList = timesheetEntryRepository.findByEmployeeEmployeeNameAndIdLogDate(employeeName, date);
 
             histories.addAll(historyList);
 
         }
         List<HistoryResponse> historyResponses = histories.stream().map(this::mapToHistoryResponse).collect(Collectors.toList());
+
 
         return historyResponses;
     }
@@ -94,9 +95,9 @@ public class HistoryServiceImpl implements HistoryService {
         LocalDate startDate = dateRangeDTO.getStartDate();
         LocalDate endDate = dateRangeDTO.getEndDate();
 
-        List<History> histories = new ArrayList<>();
+        List<TimesheetEntry> histories = new ArrayList<>();
         for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
-            List<History> historyList = historyRepository.findByApprovalStatusAndLogDate(approvalStatus, date);
+            List<TimesheetEntry> historyList = timesheetEntryRepository.findByApprovalStatusAndIdLogDate(approvalStatus, date);
 
             histories.addAll(historyList);
 
@@ -106,14 +107,18 @@ public class HistoryServiceImpl implements HistoryService {
         return historyResponses;
     }
 
-    private HistoryResponse mapToHistoryResponse(History history) {
+    private HistoryResponse mapToHistoryResponse(TimesheetEntry history) {
         HistoryResponse response = new HistoryResponse();
-        response.setEmployeeId(history.getEmployeeId());
-        response.setEmployeeName(history.getEmployeeName());
-        response.setLogDate(history.getLogDate());
+        response.setEmployeeId(history.getId().getEmployeeId());
+        response.setEmployeeName(history.getEmployee().getEmployeeName());
+        response.setLogDate(history.getId().getLogDate());
         response.setApprovalStatus(history.getApprovalStatus());
-        response.setModifiedBy(history.getModifiedBy());
-        response.setModifiedDate(history.getModifiedDate());
+        response.setProjectName(history.getProject().getProjectName());
+
+        if(history.getModifiedDate() == null){
+            response.setModifiedDate(history.getId().getLogDate());
+        }
+
         return response;
     }
 }

@@ -17,6 +17,7 @@ import java.util.Set;
 public class User {
     @Id
     @Email
+    @NotBlank
     private String companyEmail;
 
     @NotBlank

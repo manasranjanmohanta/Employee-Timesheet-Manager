@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 
 
@@ -43,6 +44,11 @@ public class TimesheetEntry {
     @Column(name = "approval_status")
     @Size(max = 10)
     private String approvalStatus;
+
+    @Column(name = "modified_date")
+    @Temporal(TemporalType.DATE)
+    private LocalDate modifiedDate;
+
 
 }
 

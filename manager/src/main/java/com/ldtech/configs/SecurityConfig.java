@@ -39,7 +39,7 @@ public AuthenticationManager authenticationManager(AuthenticationConfiguration a
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/api/auth/**");
+        return (web) -> web.ignoring().requestMatchers("/api/**");
     }
 
     // For encoding password
