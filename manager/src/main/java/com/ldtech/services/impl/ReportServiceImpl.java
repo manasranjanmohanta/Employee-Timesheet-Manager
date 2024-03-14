@@ -51,13 +51,10 @@ public class ReportServiceImpl implements ReportService {
             headerRow.createCell(2).setCellValue("Employee Name");
             headerRow.createCell(3).setCellValue("Project Name");
             headerRow.createCell(4).setCellValue("Activity Type");
-            headerRow.createCell(5).setCellValue("Start Time");
-            headerRow.createCell(6).setCellValue("End Time");
-            headerRow.createCell(7).setCellValue("Manager");
-            headerRow.createCell(8).setCellValue("Client");
-            headerRow.createCell(9).setCellValue("Department");
-            headerRow.createCell(10).setCellValue("Billing");
-            headerRow.createCell(11).setCellValue("Status");
+            headerRow.createCell(5).setCellValue("Activity Start Time");
+            headerRow.createCell(6).setCellValue("Activity End Time");
+            headerRow.createCell(7).setCellValue("Approval Status");
+            headerRow.createCell(8).setCellValue("Remarks");
 
 
             // Create data rows
@@ -71,11 +68,8 @@ public class ReportServiceImpl implements ReportService {
                 row.createCell(4).setCellValue(employee.getId().getActivityType());
                 row.createCell(5).setCellValue(employee.getId().getStartTime().toString());
                 row.createCell(6).setCellValue(employee.getEndTime().toString());
-                row.createCell(7).setCellValue(employee.getProject().getProjectManager());
-                row.createCell(8).setCellValue(employee.getProject().getClient());
-                row.createCell(9).setCellValue(employee.getEmployee().getDepartment());
-                row.createCell(10).setCellValue(employee.getProject().getBillingType());
-                row.createCell(11).setCellValue(employee.getApprovalStatus());
+                row.createCell(7).setCellValue(employee.getApprovalStatus());
+                row.createCell(8).setCellValue(employee.getRemark());
 
             }
 
