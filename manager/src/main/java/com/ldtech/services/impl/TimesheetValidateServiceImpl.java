@@ -90,6 +90,10 @@ public class TimesheetValidateServiceImpl implements TimesheetValidateService {
                     timesheetEntry.setApprovalStatus(timesheetRequest.getApprovalStatus());
                 }
             }
+
+            // get the current date
+            LocalDate currentDate = LocalDate.now();
+            timesheetEntry.setModifiedDate(currentDate);
             // Save the timesheetEntry after all updates are done
             timesheetEntryRepository.save(timesheetEntry);
         }
