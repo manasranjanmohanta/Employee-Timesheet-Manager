@@ -1,7 +1,6 @@
 package com.ldtech.controllers;
 
 import com.ldtech.dtos.DateRangeDTO;
-import com.ldtech.entities.TimesheetEntry;
 import com.ldtech.payloads.EmployeeDashboardResponse;
 import com.ldtech.services.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/dashboard")
+@RequestMapping("/api/v1/dashboard")
 public class DashboardController {
 
     @Autowired

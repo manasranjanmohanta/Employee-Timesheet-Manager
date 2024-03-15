@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/timesheetEntries")
+@RequestMapping("/api/v1/timesheetEntries")
 public class TimesheetEntryController {
 
     @Autowired

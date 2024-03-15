@@ -1,11 +1,8 @@
 package com.ldtech.controllers;
 
-import com.ldtech.entities.TimesheetEntry;
 import com.ldtech.payloads.TimesheetRequest;
 import com.ldtech.payloads.TimesheetResponse;
-import com.ldtech.services.TimesheetEntryService;
 import com.ldtech.services.TimesheetValidateService;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/api/validate")
+@RequestMapping("/api/v1/validate")
 public class TimesheetValidateController {
 
     @Autowired

@@ -2,7 +2,6 @@ package com.ldtech.controllers;
 
 import com.ldtech.entities.ActivityAllocation;
 import com.ldtech.payloads.ActivityRequest;
-import com.ldtech.payloads.AllocateData;
 import com.ldtech.payloads.EmployeeData;
 import com.ldtech.services.ActivityAllocationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/activityAllocations")
+@RequestMapping("/api/v1/activityAllocations")
 public class ActivityAllocationController {
 
     @Autowired

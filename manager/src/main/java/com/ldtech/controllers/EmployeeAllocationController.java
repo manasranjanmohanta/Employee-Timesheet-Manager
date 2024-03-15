@@ -1,19 +1,17 @@
 package com.ldtech.controllers;
 
 import com.ldtech.entities.EmployeeAllocation;
-import com.ldtech.repositories.EmployeeRepository;
-import com.ldtech.repositories.ProjectRepository;
 import com.ldtech.services.EmployeeAllocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
+
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/employeeAllocations")
+@RequestMapping("/api/v1/employeeAllocations")
 public class EmployeeAllocationController {
 
     @Autowired

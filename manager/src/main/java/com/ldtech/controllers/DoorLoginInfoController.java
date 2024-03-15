@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/doorLoginInfos")
+@RequestMapping("/api/v1/doorLoginInfos")
 public class DoorLoginInfoController {
 
     @Autowired
