@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -36,6 +37,9 @@ public class ReportServiceImpl implements ReportService {
             timesheetEntries.addAll(entryList);
 
         }
+        timesheetEntries = timesheetEntries.stream()
+                .filter(timesheetEntry -> !timesheetEntry.getApprovalStatus().equals("Pending"))
+                .collect(Collectors.toList());
         return timesheetEntries;
     }
 
@@ -96,6 +100,9 @@ public class ReportServiceImpl implements ReportService {
             timesheetEntries.addAll(entryList);
 
         }
+        timesheetEntries = timesheetEntries.stream()
+                .filter(timesheetEntry -> !timesheetEntry.getApprovalStatus().equals("Pending"))
+                .collect(Collectors.toList());
         return timesheetEntries;
     }
 
@@ -111,6 +118,9 @@ public class ReportServiceImpl implements ReportService {
             timesheetEntries.addAll(entryList);
 
         }
+        timesheetEntries = timesheetEntries.stream()
+                .filter(timesheetEntry -> !timesheetEntry.getApprovalStatus().equals("Pending"))
+                .collect(Collectors.toList());
         return timesheetEntries;
     }
 }

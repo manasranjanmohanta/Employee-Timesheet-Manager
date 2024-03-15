@@ -34,6 +34,13 @@ public class HistoryServiceImpl implements HistoryService {
             histories.addAll(historyList);
 
         }
+
+// Filter the histories list based on the status "Pending"
+        histories = histories.stream()
+                .filter(timesheetEntry -> !timesheetEntry.getApprovalStatus().equals("Pending"))
+                .collect(Collectors.toList());
+
+
         List<HistoryResponse> historyResponses = histories.stream().map(this::mapToHistoryResponse).collect(Collectors.toList());
 
         return historyResponses;
@@ -67,6 +74,10 @@ public class HistoryServiceImpl implements HistoryService {
             histories.addAll(historyList);
 
         }
+
+        histories = histories.stream()
+                .filter(timesheetEntry -> !timesheetEntry.getApprovalStatus().equals("Pending"))
+                .collect(Collectors.toList());
         List<HistoryResponse> historyResponses = histories.stream().map(this::mapToHistoryResponse).collect(Collectors.toList());
 
         return historyResponses;
@@ -84,6 +95,10 @@ public class HistoryServiceImpl implements HistoryService {
             histories.addAll(historyList);
 
         }
+
+        histories = histories.stream()
+                .filter(timesheetEntry -> !timesheetEntry.getApprovalStatus().equals("Pending"))
+                .collect(Collectors.toList());
         List<HistoryResponse> historyResponses = histories.stream().map(this::mapToHistoryResponse).collect(Collectors.toList());
 
 
@@ -102,6 +117,9 @@ public class HistoryServiceImpl implements HistoryService {
             histories.addAll(historyList);
 
         }
+        histories = histories.stream()
+                .filter(timesheetEntry -> !timesheetEntry.getApprovalStatus().equals("Pending"))
+                .collect(Collectors.toList());
         List<HistoryResponse> historyResponses = histories.stream().map(this::mapToHistoryResponse).collect(Collectors.toList());
 
         return historyResponses;
