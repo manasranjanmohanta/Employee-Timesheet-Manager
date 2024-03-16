@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Collections;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
 public class AuthController {
 
     @Autowired
@@ -39,7 +39,7 @@ public class AuthController {
 
 
     // API for login
-    @PostMapping("/login")
+    @PostMapping("/logIn")
     public ResponseEntity<String> authenticateUser(@RequestBody LoginDto loginDto){
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUserEmail(), loginDto.getPassword()));
 
@@ -49,32 +49,63 @@ public class AuthController {
     }
 
     // API for signup
+//    @PostMapping("/signUp")
+//    public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
+//        // Checking email exists in the database or not
+//        if(userRepository.existsByCompanyEmail(signUpDto.getUserEmail())){
+//            System.out.println(passwordEncoder.encode(signUpDto.getPassword()));
+//            return new ResponseEntity<>("Email is already taken!!!", HttpStatus.BAD_REQUEST);
+//        }
+//
+//        // Creating new user
+//        User user = new User();
+//        user.setCompanyEmail(signUpDto.getUserEmail());
+//        user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
+//
+//
+//        Role roles = null;
+//        try {
+//            roles = roleRepository.findByRoleName("ROLE_ADMIN").get();
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//
+//        user.setRoles(Collections.singleton(roles));
+//
+//        userRepository.save(user);
+//
+//        return new ResponseEntity<>("User registered successfully!!!", HttpStatus.OK);
+//
+//    }
     @PostMapping("/signUp")
-    public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
-        // Checking email exists in the database or not
-        if(userRepository.existsByCompanyEmail(signUpDto.getUserEmail())){
-            System.out.println(passwordEncoder.encode(signUpDto.getPassword()));
-            return new ResponseEntity<>("Email is already taken!!!", HttpStatus.BAD_REQUEST);
+    public ResponseEntity<String> registerUser(@RequestBody SignUpDto signUpDto) {
+        // Check if the email exists in the database
+        boolean emailExists = userRepository.existsByCompanyEmail(signUpDto.getUserEmail());
+        if (emailExists) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("Email is already taken!!!");
         }
 
-        // Creating new user
+        // Encode the password
+        String encodedPassword = passwordEncoder.encode(signUpDto.getPassword());
+
+        // Create a new user with the provided details
         User user = new User();
         user.setCompanyEmail(signUpDto.getUserEmail());
-        user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
+        user.setPassword(encodedPassword);
 
+        // Assign ROLE_ADMIN to the user
+        Role roleAdmin = roleRepository.findByRoleName("ROLE_ADMIN")
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+        user.setRoles(Collections.singleton(roleAdmin));
 
-        Role roles = null;
-        try {
-            roles = roleRepository.findByRoleName("ROLE_ADMIN").get();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        user.setRoles(Collections.singleton(roles));
-
+        // Save the new user
         userRepository.save(user);
 
-        return new ResponseEntity<>("User registered successfully!!!", HttpStatus.OK);
-
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body("User registered successfully!!!");
     }
+
 }

@@ -16,7 +16,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig{
 
 //    @Bean
 //    public UserDetailsService userDetailsService(){
@@ -28,18 +28,21 @@ public AuthenticationManager authenticationManager(AuthenticationConfiguration a
 }
 
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        // Configures the CSRF(Cross Site Request Forgery) to be available for Javascript to read from cookies
-        http.csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-                .authorizeHttpRequests(authorizeRequests -> authorizeRequests.requestMatchers("/api/employees/**").permitAll() )
-                .httpBasic(Customizer.withDefaults());
-        return http.build();
-    }
 
     @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/api/**");
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                // Configures CSRF to be available for JavaScript to read from cookies
+                .csrf(csrf -> csrf.disable())
+                // Configures authorization rules
+                .authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                        .requestMatchers("/api/v1/auth/**").permitAll() // Combines matchers for permitAll
+                        .anyRequest().authenticated()
+                )
+                // Configures HTTP Basic authentication
+                .httpBasic(Customizer.withDefaults());
+
+        return http.build();
     }
 
     // For encoding password
