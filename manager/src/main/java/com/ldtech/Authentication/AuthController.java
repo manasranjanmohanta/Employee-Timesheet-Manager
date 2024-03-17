@@ -6,6 +6,7 @@ import com.ldtech.entities.Role;
 import com.ldtech.entities.User;
 import com.ldtech.repositories.RoleRepository;
 import com.ldtech.repositories.UserRepository;
+import com.ldtech.security.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,9 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
@@ -40,43 +44,25 @@ public class AuthController {
 
     // API for login
     @PostMapping("/logIn")
-    public ResponseEntity<String> authenticateUser(@RequestBody LoginDto loginDto){
-        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUserEmail(), loginDto.getPassword()));
+    public ResponseEntity<String> authenticateUser(@RequestBody LoginDto loginDto) {
+        // Authenticate the user
+        Authentication authenticate = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginDto.getUserEmail(), loginDto.getPassword())
+        );
 
+        // Set the authentication in the security context
         SecurityContextHolder.getContext().setAuthentication(authenticate);
 
-        return  new ResponseEntity<>("User Signed in successfully!!", HttpStatus.OK);
+        // Generate JWT token
+        String token = jwtTokenProvider.generateToken(authenticate.getName());
+
+//        return new ResponseEntity<>("User Signed in successfully!!", HttpStatus.OK);
+
+        // Return the token
+        return ResponseEntity.ok(token);
     }
 
     // API for signup
-//    @PostMapping("/signUp")
-//    public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
-//        // Checking email exists in the database or not
-//        if(userRepository.existsByCompanyEmail(signUpDto.getUserEmail())){
-//            System.out.println(passwordEncoder.encode(signUpDto.getPassword()));
-//            return new ResponseEntity<>("Email is already taken!!!", HttpStatus.BAD_REQUEST);
-//        }
-//
-//        // Creating new user
-//        User user = new User();
-//        user.setCompanyEmail(signUpDto.getUserEmail());
-//        user.setPassword(passwordEncoder.encode(signUpDto.getPassword()));
-//
-//
-//        Role roles = null;
-//        try {
-//            roles = roleRepository.findByRoleName("ROLE_ADMIN").get();
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
-//
-//        user.setRoles(Collections.singleton(roles));
-//
-//        userRepository.save(user);
-//
-//        return new ResponseEntity<>("User registered successfully!!!", HttpStatus.OK);
-//
-//    }
     @PostMapping("/signUp")
     public ResponseEntity<String> registerUser(@RequestBody SignUpDto signUpDto) {
         // Check if the email exists in the database

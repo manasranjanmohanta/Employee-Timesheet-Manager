@@ -25,9 +25,10 @@ public class HistoryServiceImpl implements HistoryService {
     public List<HistoryResponse> getAllHistory() {
         LocalDate currentDate = LocalDate.now();
         // Find the start and end dates of the current week
-        LocalDate startDate = currentDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-        LocalDate endDate = startDate.plusDays(4);
-
+//        LocalDate startDate = currentDate.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+//        LocalDate endDate = startDate.plusDays(4);
+        LocalDate startDate = currentDate;
+        LocalDate endDate = currentDate;
         List<TimesheetEntry> histories = new ArrayList<>();
         for (LocalDate date = startDate; !date.isAfter(endDate); date = date.plusDays(1)) {
             List<TimesheetEntry> historyList = timesheetEntryRepository.findByLogDate(date);
